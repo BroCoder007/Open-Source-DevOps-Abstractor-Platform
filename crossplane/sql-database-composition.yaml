@@ -1,0 +1,33 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xsqldatabases.postgresql.opencloud.io
+  labels:
+    provider: helm
+spec:
+  compositeTypeRef:
+    apiVersion: opencloud.io/v1alpha1
+    kind: XSQLDatabase
+  resources:
+    - name: postgresql-helm-release
+      base:
+        apiVersion: helm.crossplane.io/v1beta1
+        kind: Release
+        spec:
+          forProvider:
+            chart:
+              name: postgresql
+              repository: https://charts.bitnami.com/bitnami
+              version: 12.8.3
+            namespace: default
+            set:
+              - name: primary.persistence.size
+                value: 10Gi
+      patches:
+        - type: FromCompositeFieldPath
+          fromFieldPath: spec.storageGB
+          toFieldPath: spec.forProvider.set[0].value
+          transforms:
+            - type: string
+              string:
+                fmt: "%dGi"

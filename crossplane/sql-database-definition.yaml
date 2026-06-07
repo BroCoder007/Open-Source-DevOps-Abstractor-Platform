@@ -1,0 +1,31 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xsqldatabases.opencloud.io
+spec:
+  group: opencloud.io
+  names:
+    kind: XSQLDatabase
+    plural: xsqldatabases
+  claimNames:
+    kind: SQLDatabase
+    plural: sqldatabases
+  versions:
+  - name: v1alpha1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              engine:
+                type: string
+                description: The database engine to use (e.g., postgresql, mysql)
+                default: postgresql
+              storageGB:
+                type: integer
+                description: The size of the database in GB
+                default: 10
