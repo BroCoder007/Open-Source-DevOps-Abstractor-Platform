@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenCloud Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">OC</div>
+                <h2>OpenCloud</h2>
+            </div>
+            <nav class="stepper">
+                <ul id="step-list">
+                    <li class="step active" data-step="1">
+                        <div class="step-indicator">1</div>
+                        <span class="step-label">Design & Architecture</span>
+                    </li>
+                    <li class="step" data-step="2">
+                        <div class="step-indicator">2</div>
+                        <span class="step-label">Containerization</span>
+                    </li>
+                    <li class="step" data-step="3">
+                        <div class="step-indicator">3</div>
+                        <span class="step-label">Orchestration</span>
+                    </li>
+                    <li class="step" data-step="4">
+                        <div class="step-indicator">4</div>
+                        <span class="step-label">Ingress & API</span>
+                    </li>
+                    <li class="step" data-step="5">
+                        <div class="step-indicator">5</div>
+                        <span class="step-label">CI/CD & GitOps</span>
+                    </li>
+                    <li class="step" data-step="6">
+                        <div class="step-indicator">6</div>
+                        <span class="step-label">Databases</span>
+                    </li>
+                    <li class="step" data-step="7">
+                        <div class="step-indicator">7</div>
+                        <span class="step-label">Review & Provision</span>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar" id="topbar">
+                <h1 id="topbar-title">Platform Wizard</h1>
+                <p id="topbar-desc">Build your custom open-source cloud environment</p>
+            </header>
+
+            <div class="wizard-content-area" id="wizard-container">
+                <!-- Step content will be injected here by JS -->
+            </div>
+
+            <footer class="wizard-footer" id="wizard-footer">
+                <button id="btn-prev" class="btn btn-secondary" disabled>Back</button>
+                <div class="spacer"></div>
+                <button id="btn-next" class="btn btn-primary">Continue</button>
+            </footer>
+
+            <!-- Dashboard Area (Hidden until provisioned) -->
+            <div id="dashboard-container" style="display: none; animation: fadeIn 0.4s ease forwards; height: 100%; display: flex; flex-direction: column;">
+                
+                <div class="dashboard-tabs">
+                    <button class="tab-btn active" data-target="tab-ide">Cloud IDE</button>
+                    <button class="tab-btn" data-target="tab-config">Tool Configuration</button>
+                    <button class="tab-btn" data-target="tab-deploy">Sandbox Deploy</button>
+                </div>
+
+                <div class="tab-content active" id="tab-ide" style="flex: 1; display: flex; flex-direction: column;">
+                    <div class="ide-header">
+                        <span>main.go</span>
+                        <div class="ide-actions">
+                            <button class="btn btn-secondary btn-sm" id="btn-save-code">Save Code</button>
+                            <button class="btn btn-primary btn-sm" id="btn-run-sandbox">▶ Run in Sandbox</button>
+                        </div>
+                    </div>
+                    <!-- Monaco Editor Container -->
+                    <div id="editor-container" style="flex: 1; border: 1px solid var(--border-color); border-radius: 0 0 var(--radius-md) var(--radius-md);"></div>
+                </div>
+
+                <div class="tab-content" id="tab-config" style="display: none; overflow-y: auto;">
+                    <h2>Sandbox Tool Configurations</h2>
+                    <p>Modify the abstraction layer settings for your selected tools. These changes apply to your temporary sandbox.</p>
+                    <div id="config-panels" class="options-grid" style="margin-top: 1rem;">
+                        <!-- Configuration forms injected by JS -->
+                    </div>
+                </div>
+
+                <div class="tab-content" id="tab-deploy" style="display: none; overflow-y: auto;">
+                    <h2>Sandbox Environment Controls</h2>
+                    <p>This sandbox is temporary and runs locally. Closing the platform will tear down the environment.</p>
+                    
+                    <div class="deploy-status active" style="margin-top: 1rem;">
+                        <h3>Sandbox Terminal</h3>
+                        <div class="logs" id="sandbox-logs" style="height: 300px;">
+                            <div class="log-line info">> Sandbox idle. Waiting for deployment...</div>
+                        </div>
+                        <button id="btn-teardown" class="btn btn-secondary" style="margin-top: 1rem; border-color: #ef4444; color: #ef4444;">🛑 Destroy Sandbox</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Monaco Editor CDN Loader -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.39.0/min/vs/loader.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
